@@ -125,7 +125,7 @@ spawn(function()
 			Hitbox.Parent = workspace.Effects
 			Hitbox.Size = Vector3.new(12, 5, 16)
 			Hitbox.CFrame = Root.CFrame
-			Hitbox.Transparency = 0.8
+			Hitbox.Transparency = 1
 			Hitbox.CanCollide = false
 			Hitbox.Massless = true
 			Hitbox.Name = "Hitbox"
