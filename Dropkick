@@ -1,1 +1,30 @@
-print("Sigma)
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+local Root = Character:WaitForChild("HumanoidRootPart")
+
+local function Cutscene()
+	local Camera = workspace.CurrentCamera
+	local Rig = game.ReplicatedStorage.Resources.CamLetterBox:Clone()
+	Rig.Parent = workspace.Effects
+	Rig.camerarootpart.CFrame = Root.CFrame
+	Camera.CameraType = Enum.CameraType.Scriptable
+	Camera.CFrame = Rig.camera.CFrame
+	local Track = Rig.AnimationController:LoadAnimation(game.ReplicatedStorage.Resources.KJ.dropKickCam)
+	Track:Play()
+	local StartTime = tick()
+	local Duration = 14
+	
+	repeat
+		Camera.CFrame = Rig.camera.CFrame
+		task.wait()
+	until tick() - StartTime - Duration
+	task.wait()
+	Player.CameraMode = Enum.CameraMode.Classic
+	Camera.CameraType = Enum.CameraType.Custom
+	Camera.CameraSubject = Character:WaitForChild("Humanoid")
+	Camera.FieldOfView = 75
+	Camera.Focus = Character:WaitForChild("Head").CFrame
+	Rig:Destroy()
+end
+
+Cutscene()
