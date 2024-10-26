@@ -124,7 +124,7 @@ spawn(function()
 					HitTrack.Ended:Connect(function()
 						Character:FindFirstChild("movementFolder"):FindFirstChild("Value"):SetAttribute("Speed", 30)
 						Root.Anchored = false
-						Humanoid.AutoRotate = false
+						Humanoid.AutoRotate = true
 					end)
 				end
 			end)
