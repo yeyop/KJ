@@ -125,10 +125,11 @@ spawn(function()
 			Hitbox.Parent = workspace.Effects
 			Hitbox.Size = Vector3.new(12, 5, 16)
 			Hitbox.CFrame = Root.CFrame
-			Hitbox.Transparency = 1
+			Hitbox.Transparency = 0.8
 			Hitbox.CanCollide = false
 			Hitbox.Massless = true
 			Hitbox.Name = "Hitbox"
+			game:GetService("Debris"):AddItem(Hitbox, 3.8)
 			local HitboxMotor6D = Instance.new("Motor6D")
 			HitboxMotor6D.Parent = Hitbox
 			HitboxMotor6D.Part0 = Hitbox
@@ -186,7 +187,6 @@ spawn(function()
 		end
 	end)
 	RunTrack.Ended:Connect(function()
-		Hitbox:Destroy()
 		wait(0.2)
 		if not HitTrack.IsPlaying then
 			if Character:FindFirstChild("movementFolder") and Character:FindFirstChild("movementFolder"):FindFirstChild("Value") then
