@@ -6,6 +6,9 @@ local Humanoid = Character:WaitForChild("Humanoid")
 Player:SetAttribute("Run", false)
 
 local function Cutscene()
+	if workspace.Effects:FindFirstChild("CamLetterBox") then
+		return
+	end
 	local Camera = workspace.CurrentCamera
 	local Rig = game.ReplicatedStorage.Resources.CamLetterBox:Clone()
 	Rig.Parent = workspace.Effects
@@ -105,6 +108,7 @@ spawn(function()
 					local ERoot = Enemy:WaitForChild("HumanoidRootPart")
 					local EHumanoid = Enemy:WaitForChild("Humanoid")
 					
+					Hit = true
 					Cutscene()
 					HitTrack:Play()
 					Humanoid.AutoRotate = false
