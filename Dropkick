@@ -30,6 +30,46 @@ local function Cutscene()
 	Rig:Destroy()
 end
 
+Player:GetAttributeChangedSignal("Run"):Connect(function()
+	if Player:GetAttribute("Run") then
+		local Speed = 400 / 2.5
+		local BodyVelocity = Instance.new("BodyVelocity", Root)
+		BodyVelocity.MaxForce = Vector3.new(math.huge, 0, math.huge)
+		BodyVelocity.Velocity = Root.CFrame.LookVector * Speed
+		game.Debris:AddItem(BodyVelocity, 5)
+		local IsDestroyed
+		BodyVelocity.Destroying:Connect(function()
+			IsDestroyed = true
+		end)
+		delay(4,function()
+			Speed = 120 / 2.5
+			repeat wait(0.1)
+				if Speed >= 12 / 2.5 then
+					Speed -= 12 / 2.5
+				end
+			until IsDestroyed
+		end)
+		local Attach
+		Attach = game:GetService("RunService").RenderStepped:Connect(function()
+			if not IsDestroyed then
+				BodyVelocity.Velocity = Root.CFrame.LookVector * Speed
+			elseif IsDestroyed then
+				Attach:Disconnect()
+				Attach = nil
+			end
+		end)
+		repeat wait() until IsDestroyed
+		task.wait(0.1)
+		return IsDestroyed
+	else
+		for _,v in pairs(Root:GetChildren()) do
+			if v and v:IsA("BodyVelocity") then
+				v:Destroy()
+			end
+		end
+	end
+end)
+
 local RunTrack = Humanoid:LoadAnimation(game.ReplicatedStorage.Resources.KJ.dropKick)
 local HitTrack = Humanoid:LoadAnimation(game.ReplicatedStorage.Resources.KJ.dropKickHit)
 
@@ -39,7 +79,7 @@ spawn(function()
 	if not Character:FindFirstChild("movementFolder") then return end
 	RunTrack:Play()
 	Character:FindFirstChild("movementFolder").Value:SetAttribute("Speed", 0)
-	task.wait(2.5, function()
+	task.delay(2.5, function()
 		if RunTrack.IsPlaying then
 			Player:SetAttribute("Run", true)
 		end
