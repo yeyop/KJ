@@ -86,8 +86,40 @@ spawn(function()
 	RunSound.Parent = game.SoundService
 	RunSound:Play()
 	Character:FindFirstChild("movementFolder").Value:SetAttribute("Speed", 0)
+	local RunFX = game.ReplicatedStorage.Resources.KJ.startRun:Clone()
+	RunFX.Anchored = false
+	game:GetService("Debris"):AddItem(RunFX, 12)
+	task.delay(6.25, function()
+		for _,v in pairs(RunFX:GetChildren()) do
+			if v:IsA("ParticleEmitter") then
+				v.Enabled = false
+			end
+		end
+		for _,v in pairs(RunFX["1"]:GetChildren()) do
+			if v:IsA("Beam") then
+				v.Enabled = false
+			end
+		end
+	end)
+	spawn(function()
+		local M6D = Instance.new("Motor6D")
+		M6D.Parent = RunFX
+		M6D.Part0 = RunFX
+		M6D.Part1 = Root
+		for _,v in pairs(RunFX:GetChildren()) do
+			if v:IsA("ParticleEmitter") then
+				v.Enabled = false
+			end
+		end
+	end)
 	task.delay(2.5, function()
 		if RunTrack.IsPlaying then
+			RunFX.Parent = workspace.Effects
+			for _,v in pairs(RunFX:GetChildren()) do
+				if v:IsA("ParticleEmitter") then
+					v.Enabled = true
+				end
+			end
 			Player:SetAttribute("Run", true)
 			local Hitbox = Instance.new("Part")
 			Hitbox.Parent = workspace.Effects
@@ -125,6 +157,19 @@ spawn(function()
 						Character:FindFirstChild("movementFolder"):FindFirstChild("Value"):SetAttribute("Speed", 30)
 						Root.Anchored = false
 						Humanoid.AutoRotate = true
+					end)
+					task.delay(9.9, function()
+						local Label = game.ReplicatedStorage.Resources.KJ["20-20-20DropKick"]:Clone()
+						Label.Parent = game.Players.LocalPlayer.PlayerGui.MainScreen.Main
+						wait(0.55)
+						Label["1"].Visible = true
+						wait(0.55)
+						Label["2"].Visible = true
+						wait(0.55)
+						Label["3"].Visible = true
+						wait(0.55)
+						Label["4"].Visible = true
+						game:GetService("Debris"):AddItem(Label, 1.8)
 					end)
 				end
 			end)
