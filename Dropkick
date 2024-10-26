@@ -186,6 +186,7 @@ spawn(function()
 		end
 	end)
 	RunTrack.Ended:Connect(function()
+		Hitbox:Destroy()
 		wait(0.2)
 		if not HitTrack.IsPlaying then
 			if Character:FindFirstChild("movementFolder") and Character:FindFirstChild("movementFolder"):FindFirstChild("Value") then
