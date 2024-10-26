@@ -30,7 +30,6 @@ Player:GetAttributeChangedSignal("Cutscene"):Connect(function()
 		Camera.FieldOfView = 75
 		Camera.Focus = Character:WaitForChild("Head").CFrame
 		Rig:Destroy()
-		Player:SetAttribute("Cutscene", false)
 	end
 end)
 
