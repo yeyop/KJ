@@ -17,7 +17,7 @@ local function Cutscene()
 	repeat
 		Camera.CFrame = Rig.camera.CFrame
 		task.wait()
-	until tick() - StartTime - Duration
+	until tick() - StartTime >= Duration
 	task.wait()
 	Player.CameraMode = Enum.CameraMode.Classic
 	Camera.CameraType = Enum.CameraType.Custom
