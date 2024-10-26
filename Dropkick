@@ -32,6 +32,7 @@ Player:GetAttributeChangedSignal("Run"):Connect(function()
 	if Player:GetAttribute("Run") then
 		local Speed = 400 / 2.5
 		local BodyVelocity = Instance.new("BodyVelocity", Root)
+		BodyVelocity.Name = "DropkickVelocity"
 		BodyVelocity.MaxForce = Vector3.new(math.huge, 0, math.huge)
 		BodyVelocity.Velocity = Root.CFrame.LookVector * Speed
 		game.Debris:AddItem(BodyVelocity, 5)
@@ -60,10 +61,8 @@ Player:GetAttributeChangedSignal("Run"):Connect(function()
 		task.wait(0.1)
 		return IsDestroyed
 	else
-		for _,v in pairs(Root:GetChildren()) do
-			if v and v:IsA("BodyVelocity") then
-				v:Destroy()
-			end
+		if Root:FindFirstChild("DropkickVelocity") then
+			Root:FindFirstChild("DropkickVelocity"):Destroy()
 		end
 	end
 end)
@@ -78,6 +77,14 @@ spawn(function()
 	RunTrack:Play()
 	Character:FindFirstChild("movementFolder").Value:SetAttribute("Speed", 0)
 	task.wait(2.5, function()
-		Player:SetAttribute("Run", true)
+		if RunTrack.IsPlaying then
+			Player:SetAttribute("Run", true)
+		end
 	end)
+end)
+
+Humanoid.HealthChanged:Connect(function()
+	if Step ~= "Hit" then
+		RunTrack:Stop()
+	end
 end)
