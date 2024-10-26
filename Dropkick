@@ -77,11 +77,61 @@ local Step = "Startup"
 spawn(function()
 	if Humanoid.Health <= 0 then return end
 	if not Character:FindFirstChild("movementFolder") then return end
+	if not Character:FindFirstChild("movementFolder"):FindFirstChild("Value") then return end
 	RunTrack:Play()
+	local RunSound = game.ReplicatedStorage.Resources.KJ.dropkickWind:Clone()
+	RunSound.Parent = game.SoundService
+	RunSound:Play()
 	Character:FindFirstChild("movementFolder").Value:SetAttribute("Speed", 0)
 	task.delay(2.5, function()
 		if RunTrack.IsPlaying then
 			Player:SetAttribute("Run", true)
+			local Hitbox = Instance.new("Part")
+			Hitbox.Parent = workspace.Effects
+			Hitbox.Size = Vector3.new(12, 5, 16)
+			Hitbox.CFrame = Root.CFrame
+			Hitbox.Transparency = 1
+			Hitbox.CanCollide = false
+			Hitbox.Massless = true
+			Hitbox.Name = "Hitbox"
+			local HitboxMotor6D = Instance.new("Motor6D")
+			HitboxMotor6D.Parent = Hitbox
+			HitboxMotor6D.Part0 = Hitbox
+			HitboxMotor6D.Part1 = Root
+			local Hit = false
+			Hitbox.Touched:Connect(function(e)
+				if e.Parent:FindFirstChild("Humanoid") and e.Parent ~= Character and not Hit then
+					local Enemy = e.Parent
+					local ERoot = Enemy:WaitForChild("HumanoidRootPart")
+					local EHumanoid = Enemy:WaitForChild("Humanoid")
+					
+					Cutscene()
+					HitTrack:Play()
+					Humanoid.AutoRotate = false
+					Root.Anchored = true
+					Hitbox:Destroy()
+					RunSound.Volume = 0
+					local HitSound = game.ReplicatedStorage.Resources.KJ.dropkickS:Clone()
+					HitSound.Parent = game.SoundService
+					HitSound:Play()
+					HitSound.Ended:Connect(function()
+						HitSound:Destroy()
+					end)
+					HitTrack.Ended:Connect(function()
+						Character:FindFirstChild("movementFolder"):FindFirstChild("Value"):SetAttribute("Speed", 30)
+						Root.Anchored = false
+						Humanoid.AutoRotate = false
+					end)
+				end
+			end)
+		end
+	end)
+	RunTrack.Ended:Connect(function()
+		wait(0.2)
+		if not HitTrack.IsPlaying then
+			if Character:FindFirstChild("movementFolder") and Character:FindFirstChild("movementFolder"):FindFirstChild("Value") then
+				Character:FindFirstChild("movementFolder"):FindFirstChild("Value"):SetAttribute("Speed", 30)
+			end
 		end
 	end)
 end)
