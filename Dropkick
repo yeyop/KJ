@@ -129,7 +129,6 @@ spawn(function()
 			Hitbox.CanCollide = false
 			Hitbox.Massless = true
 			Hitbox.Name = "Hitbox"
-			game:GetService("Debris"):AddItem(Hitbox, 3.8)
 			local HitboxMotor6D = Instance.new("Motor6D")
 			HitboxMotor6D.Parent = Hitbox
 			HitboxMotor6D.Part0 = Hitbox
@@ -138,8 +137,15 @@ spawn(function()
 			Hitbox.Touched:Connect(function(e)
 				if e.Parent:FindFirstChild("Humanoid") and e.Parent ~= Character and not Hit then
 					local Enemy = e.Parent
-					local ERoot = Enemy:WaitForChild("HumanoidRootPart")
-					local EHumanoid = Enemy:WaitForChild("Humanoid")
+					local EnemyClone = Enemy:Clone()
+					local ERoot = EnemyClone:WaitForChild("HumanoidRootPart")
+					local EHumanoid = EnemyClone:WaitForChild("Humanoid")
+					
+					
+					local Weld = Instance.new("Weld", ERoot)
+					Weld.Part0 = Root
+					Weld.Part1 = Enemy
+					Weld.C0 = CFrame.new(0, 0, -2)
 					
 					Hit = true
 					Player:SetAttribute("Cutscene", true)
@@ -168,6 +174,7 @@ spawn(function()
 						Character:FindFirstChild("movementFolder"):FindFirstChild("Value"):SetAttribute("Speed", 30)
 						Root.Anchored = false
 						Humanoid.AutoRotate = true
+						EnemyClone:Destroy()
 					end)
 					task.delay(9.9, function()
 						local Label = game.ReplicatedStorage.Resources.KJ["20-20-20DropKick"]:Clone()
