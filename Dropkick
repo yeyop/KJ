@@ -141,6 +141,8 @@ spawn(function()
 					local ERoot = EnemyClone:WaitForChild("HumanoidRootPart")
 					local EHumanoid = EnemyClone:WaitForChild("Humanoid")
 					
+					ERoot.CFrame = Root.CFrame * CFrame.new(0, 0, -2)
+					EnemyClone.Parent = workspace.Effects
 					
 					local Weld = Instance.new("Weld", ERoot)
 					Weld.Part0 = Root
