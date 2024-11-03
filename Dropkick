@@ -141,13 +141,13 @@ spawn(function()
 					local ERoot = EnemyClone:WaitForChild("HumanoidRootPart")
 					local EHumanoid = EnemyClone:WaitForChild("Humanoid")
 					
-					ERoot.CFrame = Root.CFrame * CFrame.new(0, 0, -2)
+					ERoot.CFrame = Root.CFrame * CFrame.new(0, 0, -8)
 					EnemyClone.Parent = workspace.Effects
 					
 					local Weld = Instance.new("Weld", ERoot)
 					Weld.Part0 = Root
 					Weld.Part1 = ERoot
-					Weld.C0 = CFrame.new(0, 0, -2) * CFrame.Angles(0, math.rad(180), 0)
+					Weld.C0 = CFrame.new(0, 0, -8) * CFrame.Angles(0, math.rad(180), 0)
 					
 					local VictimTrack = EHumanoid:LoadAnimation(game.ReplicatedStorage.Resources.KJ.dropKickVictim)
 					VictimTrack:Play()
