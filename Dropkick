@@ -35,7 +35,7 @@ end)
 
 Player:GetAttributeChangedSignal("Run"):Connect(function()
 	if Player:GetAttribute("Run") then
-		local Speed = 200 / 2.5
+		local Speed = 300 / 2.5
 		local BodyVelocity = Instance.new("BodyVelocity", Root)
 		BodyVelocity.MaxForce = Vector3.new(math.huge, 0, math.huge)
 		BodyVelocity.Velocity = Root.CFrame.LookVector * Speed
