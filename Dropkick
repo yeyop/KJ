@@ -147,7 +147,10 @@ spawn(function()
 					local Weld = Instance.new("Weld", ERoot)
 					Weld.Part0 = Root
 					Weld.Part1 = ERoot
-					Weld.C0 = CFrame.new(0, 0, -2)
+					Weld.C0 = CFrame.new(0, 0, -2) * CFrame.Angles(0, math.rad(180), 0)
+					
+					local VictimTrack = EHumanoid:LoadAnimation(game.ReplicatedStorage.Resources.KJ.dropKickVictim)
+					VictimTrack:Play()
 					
 					Hit = true
 					Player:SetAttribute("Cutscene", true)
