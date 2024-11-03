@@ -146,7 +146,7 @@ spawn(function()
 					
 					local Weld = Instance.new("Weld", ERoot)
 					Weld.Part0 = Root
-					Weld.Part1 = Enemy
+					Weld.Part1 = ERoot
 					Weld.C0 = CFrame.new(0, 0, -2)
 					
 					Hit = true
