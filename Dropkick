@@ -35,7 +35,7 @@ end)
 
 Player:GetAttributeChangedSignal("Run"):Connect(function()
 	if Player:GetAttribute("Run") then
-		local Speed = 325 / 2.5
+		local Speed = 400 / 2.5
 		local BodyVelocity = Instance.new("BodyVelocity", Root)
 		BodyVelocity.MaxForce = Vector3.new(math.huge, 0, math.huge)
 		BodyVelocity.Velocity = Root.CFrame.LookVector * Speed
@@ -133,6 +133,7 @@ spawn(function()
 			HitboxMotor6D.Parent = Hitbox
 			HitboxMotor6D.Part0 = Hitbox
 			HitboxMotor6D.Part1 = Root
+			game:GetService("Debris"):AddItem(Hitbox, 6.25)
 			local Hit = false
 			Hitbox.Touched:Connect(function(e)
 				if e.Parent:FindFirstChild("Humanoid") and e.Parent ~= Character and not Hit then
@@ -141,13 +142,13 @@ spawn(function()
 					local ERoot = EnemyClone:WaitForChild("HumanoidRootPart")
 					local EHumanoid = EnemyClone:WaitForChild("Humanoid")
 					
-					ERoot.CFrame = Root.CFrame * CFrame.new(0, 0, -8)
+					ERoot.CFrame = Root.CFrame * CFrame.new(0, 0, -2)
 					EnemyClone.Parent = workspace.Effects
 					
 					local Weld = Instance.new("Weld", ERoot)
 					Weld.Part0 = Root
 					Weld.Part1 = ERoot
-					Weld.C0 = CFrame.new(0, 0, -8) * CFrame.Angles(0, math.rad(180), 0)
+					Weld.C0 = CFrame.new(0, 0, -2) * CFrame.Angles(0, math.rad(180), 0)
 					
 					local VictimTrack = EHumanoid:LoadAnimation(game.ReplicatedStorage.Resources.KJ.dropKickVictim)
 					VictimTrack:Play()
@@ -204,7 +205,6 @@ spawn(function()
 			if Character:FindFirstChild("movementFolder") and Character:FindFirstChild("movementFolder"):FindFirstChild("Value") then
 				Character:FindFirstChild("movementFolder"):FindFirstChild("Value"):SetAttribute("Speed", 30)
 			end
-			Hitbox:Destroy()
 		end
 	end)
 end)
